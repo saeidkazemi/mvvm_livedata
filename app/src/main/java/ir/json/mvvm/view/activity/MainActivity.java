@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -17,27 +18,30 @@ import java.util.List;
 
 import ir.json.mvvm.R;
 import ir.json.mvvm.adapter.AdapterPost;
+import ir.json.mvvm.adapter.AdapterPostDataBinding;
 import ir.json.mvvm.databinding.ActivityMainBinding;
 import ir.json.mvvm.interfaces.ClickPostItem;
 import ir.json.mvvm.model.Post;
 import ir.json.mvvm.viewmodel.PostViewModel;
 
 public class MainActivity extends AppCompatActivity implements ClickPostItem {
-    ActivityMainBinding binding;
-    AdapterPost adapterPost;
+    private ActivityMainBinding binding;
+    private AdapterPostDataBinding adapterPost;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         PostViewModel postViewModel = new ViewModelProvider(this).get(PostViewModel.class);
-        LiveData<List<Post>> listMutableLiveData=postViewModel.getPostResponseLiveData();
-        listMutableLiveData.observe(this, new Observer<List<Post>>() {
+        postViewModel.getPostResponseLiveData().observe(this, new Observer<List<Post>>() {
             @Override
             public void onChanged(List<Post> posts) {
+                if (posts != null){
                 binding.recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                adapterPost = new AdapterPost(posts,MainActivity.this::clickPostItem,MainActivity.this);
-                binding.recyclerView.setAdapter(adapterPost);
+                adapterPost = new AdapterPostDataBinding(posts,MainActivity.this::clickPostItem,MainActivity.this);
+                binding.recyclerView.setAdapter(adapterPost);}
+                else
+                    Toast.makeText(MainActivity.this, "Check your connection to the network", Toast.LENGTH_SHORT).show();
             }
         });
         postViewModel.getPostRepository().progressState.observe(this, new Observer<Boolean>() {
