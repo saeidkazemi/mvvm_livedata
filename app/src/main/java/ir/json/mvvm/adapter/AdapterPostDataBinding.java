@@ -21,12 +21,10 @@ import ir.json.mvvm.model.Post;
 public class AdapterPostDataBinding extends RecyclerView.Adapter<AdapterPostDataBinding.viewHolder> {
     private List<Post> posts;
     private ClickPostItem clickPostItem;
-    private Context mContext;
     private ItemPostDataBindingBinding binding;
-    public AdapterPostDataBinding(List<Post> posts, ClickPostItem clickPostItem, Context mContext) {
+    public AdapterPostDataBinding(List<Post> posts, ClickPostItem clickPostItem) {
         this.posts=posts;
         this.clickPostItem=clickPostItem;
-        this.mContext=mContext;
     }
 
     @NonNull

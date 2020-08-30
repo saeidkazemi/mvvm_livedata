@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements ClickPostItem {
             public void onChanged(List<Post> posts) {
                 if (posts != null){
                 binding.recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                adapterPost = new AdapterPostDataBinding(posts,MainActivity.this::clickPostItem,MainActivity.this);
+                adapterPost = new AdapterPostDataBinding(posts,MainActivity.this::clickPostItem);
                 binding.recyclerView.setAdapter(adapterPost);}
                 else
                     Toast.makeText(MainActivity.this, "Check your connection to the network", Toast.LENGTH_SHORT).show();

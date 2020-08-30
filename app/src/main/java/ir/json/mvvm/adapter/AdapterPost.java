@@ -20,18 +20,16 @@ import ir.json.mvvm.model.Post;
 public class AdapterPost extends RecyclerView.Adapter<AdapterPost.viewHolder> {
     private List<Post> posts;
     private ClickPostItem clickPostItem;
-    private Context mContext;
     private ItemPostBinding binding;
-    public AdapterPost(List<Post> posts, ClickPostItem clickPostItem, Context mContext) {
+    public AdapterPost(List<Post> posts, ClickPostItem clickPostItem) {
         this.posts=posts;
         this.clickPostItem=clickPostItem;
-        this.mContext=mContext;
     }
 
     @NonNull
     @Override
     public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(mContext);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         binding = ItemPostBinding.inflate(inflater,parent,false);
         return new viewHolder(binding);
     }
@@ -39,7 +37,7 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.viewHolder> {
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
         final Post post = posts.get(position);
-        Glide.with(mContext).load(posts.get(position).getImage())
+        Glide.with(holder.itemView.getContext()).load(posts.get(position).getImage())
                 .into(holder.binding.image);
         holder.binding.name.setText(posts.get(position).getName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
