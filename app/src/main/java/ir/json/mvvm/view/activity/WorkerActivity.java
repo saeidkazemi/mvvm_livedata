@@ -26,7 +26,7 @@ public class WorkerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_worker);
         Data.Builder data = new Data.Builder().putString("tag","download");
         Constraints.Builder constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED);
-        PeriodicWorkRequest request = new PeriodicWorkRequest.Builder(Vmanager.class,5, TimeUnit.SECONDS)
+        PeriodicWorkRequest request = new PeriodicWorkRequest.Builder(Vmanager.class,1, TimeUnit.MINUTES)
                 .setInputData(data.build())
                 .setConstraints(constraints.build())
                 .build();

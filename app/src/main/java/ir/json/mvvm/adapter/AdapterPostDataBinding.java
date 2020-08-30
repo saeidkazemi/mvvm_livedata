@@ -52,6 +52,24 @@ public class AdapterPostDataBinding extends RecyclerView.Adapter<AdapterPostData
         return posts.size();
     }
 
+    public void deleteItem(Post post)
+    {
+        notifyItemRemoved(posts.indexOf(post));
+        posts.remove(post);
+    }
+
+    public void insertItem(Post post)
+    {
+        posts.add(post);
+        notifyItemInserted(getItemCount());
+    }
+
+    public void updateList(List<Post> posts)
+    {
+        this.posts.addAll(posts);
+        notifyDataSetChanged();
+    }
+
     static class viewHolder extends RecyclerView.ViewHolder {
         private ItemPostDataBindingBinding binding;
         public viewHolder(@NonNull ItemPostDataBindingBinding binding) {
