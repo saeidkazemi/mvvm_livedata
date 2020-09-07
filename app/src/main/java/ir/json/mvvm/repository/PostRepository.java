@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import ir.json.mvvm.model.Post;
 import ir.json.mvvm.remote.ApiRequest;
 import ir.json.mvvm.remote.RetrofitRequest;
@@ -17,6 +19,8 @@ import retrofit2.Response;
 public class PostRepository {
     private ApiRequest apiRequest;
     public MutableLiveData<Boolean> progressState = new MutableLiveData<>();
+
+    @Inject
     public PostRepository() {
         apiRequest = RetrofitRequest.getRetrofitInstance().create(ApiRequest.class);
     }

@@ -28,35 +28,6 @@ public class UserViewModel extends ViewModel {
         return userRepository.getListUser();
     }
 
-    public MutableLiveData<List<User>> getUserListObservable(){
-        MutableLiveData<List<User>> userList = new MutableLiveData<>();
-        userRepository.getListUserObservable()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<User>>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        disposable.add(d);
-                    }
-
-                    @Override
-                    public void onNext(@NonNull List<User> users) {
-                        userList.setValue(users);
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        userList.setValue(null);
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-        return userList;
-    }
-
     @Override
     protected void onCleared() {
         super.onCleared();

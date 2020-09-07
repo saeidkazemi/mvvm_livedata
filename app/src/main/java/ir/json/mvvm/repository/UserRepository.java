@@ -25,9 +25,4 @@ public class UserRepository {
     {
         return database.userDao().getAll();
     }
-
-    public Observable<List<User>> getListUserObservable()
-    {
-        return database.userDao().getAllUserObservable();
-    }
 }

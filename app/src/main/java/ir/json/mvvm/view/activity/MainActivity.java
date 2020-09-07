@@ -1,39 +1,37 @@
 package ir.json.mvvm.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.pnikosis.materialishprogress.ProgressWheel;
-
-import java.util.ArrayList;
 import java.util.List;
 
-import ir.json.mvvm.R;
-import ir.json.mvvm.adapter.AdapterPost;
+import javax.inject.Inject;
+
+import dagger.android.support.DaggerAppCompatActivity;
 import ir.json.mvvm.adapter.AdapterPostDataBinding;
 import ir.json.mvvm.databinding.ActivityMainBinding;
 import ir.json.mvvm.interfaces.ClickPostItem;
 import ir.json.mvvm.model.Post;
 import ir.json.mvvm.viewmodel.PostViewModel;
+import ir.json.mvvm.viewmodel.ViewModelProviderFactory;
 
-public class MainActivity extends AppCompatActivity implements ClickPostItem {
+public class MainActivity extends DaggerAppCompatActivity implements ClickPostItem {
     private ActivityMainBinding binding;
     private AdapterPostDataBinding adapterPost;
+    private PostViewModel postViewModel;
+    @Inject ViewModelProviderFactory factory;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        PostViewModel postViewModel = new ViewModelProvider(this).get(PostViewModel.class);
+        postViewModel = new ViewModelProvider(this,factory).get(PostViewModel.class);
         postViewModel.getPostResponseLiveData().observe(this, new Observer<List<Post>>() {
             @Override
             public void onChanged(List<Post> posts) {

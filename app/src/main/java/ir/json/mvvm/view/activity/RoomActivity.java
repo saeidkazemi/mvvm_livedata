@@ -23,22 +23,12 @@ public class RoomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room);
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-        getUsersListObservable();
+        getUsersListLiveData();
     }
 
     private void getUsersListLiveData()
     {
         userViewModel.getUserList().observe(this, new Observer<List<User>>() {
-            @Override
-            public void onChanged(List<User> users) {
-                for (User user : users)
-                    Log.e(TAG, "onChanged: " + user.getFirstName() + " " + user.getLastName());
-            }
-        });
-    }
-    private void getUsersListObservable()
-    {
-        userViewModel.getUserListObservable().observe(this, new Observer<List<User>>() {
             @Override
             public void onChanged(List<User> users) {
                 for (User user : users)

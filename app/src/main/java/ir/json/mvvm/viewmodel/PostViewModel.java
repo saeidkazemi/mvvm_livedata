@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import ir.json.mvvm.model.Post;
 import ir.json.mvvm.repository.PostRepository;
 
@@ -12,8 +14,9 @@ public class PostViewModel extends ViewModel {
     private PostRepository postRepository;
     private LiveData<List<Post>> postResponseLiveData;
 
-    public PostViewModel() {
-        postRepository = new PostRepository();
+    @Inject
+    public PostViewModel(PostRepository postRepository) {
+        this.postRepository = postRepository;
         this.postResponseLiveData = postRepository.getListPost();
     }
 
